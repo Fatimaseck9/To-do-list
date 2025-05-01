@@ -26,23 +26,13 @@ export class TasksService {
     });
   }
 
-  //async createTask(createTaskDto: CreateTaskDto, userId: number): Promise<Task> {
-    //const task = this.tasksRepository.create({
-     // ...createTaskDto,
-     // user: { id: userId },
-   // });
-   //// return this.tasksRepository.save(task);
- // }
- async createTask(createTaskDto: CreateTaskDto, creatorId: number, targetUserId?: number): Promise<Task> {
-  // Créer la tâche en fonction de l'utilisateur qui l'a créée
-  const task = this.tasksRepository.create({
+  async createTask(createTaskDto: CreateTaskDto, userId: number): Promise<Task> {
+    const task = this.tasksRepository.create({
       ...createTaskDto,
-      user: { id: targetUserId || creatorId }, // Utiliser targetUserId si fourni (admin), sinon utiliser creatorId (utilisateur standard)
-  });
-  
-  return this.tasksRepository.save(task);
-}
-
+      user: { id: userId },
+    });
+    return this.tasksRepository.save(task);
+  }
 
   async updateTask(taskId: number, updateTaskDto: UpdateTaskDto, user: any): Promise<Task> {
     const task = await this.tasksRepository.findOne({
