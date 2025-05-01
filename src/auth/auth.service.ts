@@ -47,7 +47,7 @@ export class AuthService {
         throw new UnauthorizedException('Utilisateur non trouvé');
       }
   
-      // Optionnel: vérifier que le refreshToken est celui stocké dans l'utilisateur
+      // vérifier que le refreshToken est celui stocké dans l'utilisateur
       if (user.refreshToken !== refreshToken) {
         throw new UnauthorizedException('Refresh token invalide');
       }

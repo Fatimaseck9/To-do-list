@@ -7,7 +7,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe()); 
  
     // Activer CORS
-    app.enableCors(); // Cela autorisera tout le monde à accéder à votre API
+    app.enableCors(); 
   await app.listen(process.env.PORT ?? 3000);
 
 
