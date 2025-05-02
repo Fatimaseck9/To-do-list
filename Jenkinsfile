@@ -12,7 +12,8 @@ pipeline {
 
         stage('Install') {
             steps {
-                bat 'npm install'
+                bat 'npm cache clean --force'
+                 bat 'npm ci --no-optional'
             }
         }
 
