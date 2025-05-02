@@ -38,7 +38,7 @@ pipeline {
                     bat "${env.SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat"
             }
         }
-
+      
         stage('Approve Deployment') {
             input {
                 message "Do you want to proceed for deployment?"
