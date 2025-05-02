@@ -30,7 +30,7 @@ pipeline {
         // stage('Test') {
              //steps {
             
-                 //bat 'npm test -- --coverage --watchAll=false --passWithNoTests'
+                 //bat 'npm test'
             // }
        // }
         stage('SonarQube Analysis') {
