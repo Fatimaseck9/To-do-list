@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'node 20'  
     }
+    environment {
+        SONAR_SCANNER_HOME = tool 'Sonar' 
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -31,7 +34,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                bat 'sonar-scanner'
+                withSonarQubeEnv('Sonar') { 
+                    bat "${env.SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat"
             }
         }
 
