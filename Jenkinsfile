@@ -1,11 +1,14 @@
 pipeline {
     agent any
+
     tools {
-        nodejs 'node 20'  
+        nodejs 'node 20'
     }
+
     environment {
-        SONAR_SCANNER_HOME = tool 'Sonar' 
+        SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
     }
+
     stages {
         stage('Checkout') {
             steps {
@@ -16,7 +19,7 @@ pipeline {
         stage('Install') {
             steps {
                 bat 'npm cache clean --force'
-                 bat 'npm ci --no-optional'
+                bat 'npm ci --no-optional'
             }
         }
 
@@ -26,37 +29,33 @@ pipeline {
             }
         }
 
-         //stage('Test') {
-            // steps {
-             //   bat 'npm test'
-           // }
-        //}
-
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonar') { 
+                withSonarQubeEnv('SonarQube') {
                     bat "${env.SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat"
+                }
             }
         }
-      
+
         stage('Approve Deployment') {
             input {
                 message "Do you want to proceed for deployment?"
             }
             steps {
-                sh 'echo "Deploying into Server"'
+                bat 'echo Deploying into Server'
             }
         }
     }
+
     post {
         aborted {
-            echo "Sending message to agent: Pipeline aborted"
+            echo "Pipeline aborted"
         }
         failure {
-            echo "Sending message to agent: Pipeline failed"
+            echo "Pipeline failed"
         }
         success {
-            echo "Sending message to agent: Pipeline succeeded"
+            echo "Pipeline succeeded"
         }
-    }
+    } 
 }
